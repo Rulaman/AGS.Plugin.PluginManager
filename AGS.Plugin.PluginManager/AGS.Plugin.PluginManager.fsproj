@@ -1,0 +1,48 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>net48</TargetFramework>
+
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    <WarnOn>3390;$(WarnOn)</WarnOn>
+    <ApplicationIcon>Resources\icon-512.ico</ApplicationIcon>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Content Include="Data\RepositoryTestdata.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Compile Include="Contracts\PackageInfo.fs" />
+    <Compile Include="FileReader.fs" />
+    <Content Include="Info.txt" />
+    <Content Include="Properties\launchSettings.json" />
+    <EmbeddedResource Include="Resources\icon-16.ico" />
+    <EmbeddedResource Include="Resources\icon-512.ico" />
+    <Compile Include="Plugin.fs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="AGS.Types">
+      <HintPath>..\external\AGS.Types.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Windows.Forms" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Extensions.Http" Version="8.0.0" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\PluginManager.View\PluginManager.View.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Update="Resource.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+    </EmbeddedResource>
+  </ItemGroup>
+
+  <Target Name="PostBuild" AfterTargets="PostBuildEvent">
+    <Exec Command="rem echo f | xcopy ...&#xD;&#xA;echo d | xcopy &quot;$(TargetPath)&quot; &quot;C:\temp\ags 3.6.1.12 beta 13\$(TargetFileName)&quot; /Y /S&#xD;&#xA;echo d | xcopy &quot;$(TargetDir)PluginManager.View.dll&quot; &quot;C:\temp\ags 3.6.1.12 beta 13\PluginManager.View.dll&quot; /Y /S&#xD;&#xA;xcopy &quot;$(TargetDir)FSharp.Core.dll&quot; &quot;C:\temp\ags 3.6.1.12 beta 13\FSharp.Core.dll&quot; /Y /S" />
+  </Target>
+</Project>
